@@ -2,6 +2,8 @@ import 'package:au_chat/screens/profile.dart';
 import 'package:au_chat/screens/users_chat_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../detail_chat_screen.dart';
+
 class HomeSreen extends StatefulWidget {
   const HomeSreen({Key? key}) : super(key: key);
 
@@ -15,7 +17,7 @@ class _HomeSreenState extends State<HomeSreen> {
 
   List<Widget> tabPages = [
     UsersChatScreen(),
-    Text('Hello'),
+    DetailChatScreen(),
     ProfileScreen(),
   ];
 
