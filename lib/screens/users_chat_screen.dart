@@ -5,8 +5,14 @@ import 'package:jiffy/jiffy.dart';
 
 class UsersChatScreen extends StatelessWidget {
   final List<UserModel> entries = <UserModel>[
-    UserModel(0, 'username0', 'https://www.w3schools.com/howto/img_avatar.png',
-        'online', '2021-10-10T00:00:00Z', 'lastMessage', false),
+    UserModel(
+        0,
+        'usernameusername0000000000000000000000000000000000',
+        'https://www.w3schools.com/howto/img_avatar.png',
+        'online',
+        '2021-10-10T00:00:00Z',
+        'lastMessage lastMessagelastMessage lastMessagelastMessagelastMessagelastMessage',
+        false),
     UserModel(1, 'username1', 'https://www.w3schools.com/howto/img_avatar2.png',
         'offline', '2021-10-10T00:00:00Z', 'Haha ', false),
     UserModel(2, 'username2', 'https://www.w3schools.com/howto/img_avatar.png',
@@ -39,14 +45,14 @@ class UsersChatScreen extends StatelessWidget {
           Container(
             color: Colors.black87,
             height: 120,
-            margin: EdgeInsets.only(top: 20.0),
+            // margin: EdgeInsets.only(top: 20.0),
             // color: Colors.blue,
             child: Column(
               children: [
                 Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(top: 10),
+                      // padding: EdgeInsets.only(top: 10),
                       margin: EdgeInsets.only(left: 10),
                       alignment: Alignment.centerLeft,
                       height: 60,
@@ -130,7 +136,7 @@ class UsersChatScreen extends StatelessWidget {
             ),
           ),
           Container(
-            height: height - 200,
+            height: height - 208,
             color: Colors.grey[200],
             child: ListUserChat(entries),
           ),
@@ -167,63 +173,57 @@ class UserChart extends StatelessWidget {
       // color: Colors.red,
       height: 80,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
             maxRadius: 24,
             backgroundImage: NetworkImage(this.user.avatar),
           ),
-          Container(
+          Expanded(
               child: Container(
             margin: EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: 220,
-                  child: Container(
-                    // color: Colors.yellow,
-                    child: Text(
-                      this.user.username,
-                      style: TextStyle(
-                        fontSize: 18,
-                        // color: Colors.white
-                      ),
-                      textAlign: TextAlign.left,
+                Container(
+                  child: Text(
+                    this.user.username,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 18,
+                      // color: Colors.white
                     ),
+                    textAlign: TextAlign.left,
                   ),
                 ),
-                SizedBox(
-                  width: 220,
-                  child: Container(
-                    // color: Colors.blue,
-                    child: Text(
-                      this.user.lastMessage,
-                      style: TextStyle(
-                          color: Colors.indigoAccent[900],
-                          fontWeight: this.user.isSeen == true
-                              ? FontWeight.bold
-                              : FontWeight.normal),
-                      textAlign: TextAlign.left,
-                    ),
+                Container(
+                  child: Text(
+                    this.user.lastMessage,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                        color: Colors.indigoAccent[900],
+                        fontWeight: this.user.isSeen == true
+                            ? FontWeight.bold
+                            : FontWeight.normal),
+                    textAlign: TextAlign.left,
                   ),
                 ),
               ],
             ),
           )),
           Container(
-            child: SizedBox(
-              // width: double.infinity,
-              child: Container(
-                width: 80,
-                child: Text(
-                  Jiffy(this.user.lastSeen).format("MMM do"),
-                  style: TextStyle(
-                      color: Colors.indigoAccent[900],
-                      fontWeight: this.user.isSeen == true
-                          ? FontWeight.bold
-                          : FontWeight.normal),
-                  textAlign: TextAlign.right,
-                ),
-              ),
+            // color: Colors.blue,
+            width: 80,
+            child: Text(
+              Jiffy(this.user.lastSeen).format("MMM do"),
+              style: TextStyle(
+                  color: Colors.indigoAccent[900],
+                  fontWeight: this.user.isSeen == true
+                      ? FontWeight.bold
+                      : FontWeight.normal),
+              textAlign: TextAlign.right,
             ),
           ),
         ],
