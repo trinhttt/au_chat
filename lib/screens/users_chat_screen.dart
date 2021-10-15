@@ -136,7 +136,7 @@ class UsersChatScreen extends StatelessWidget {
             ),
           ),
           Container(
-            height: height - 210,
+            height: height - 208,
             color: Colors.grey[200],
             child: ListUserChat(entries),
           ),
