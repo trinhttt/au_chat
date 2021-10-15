@@ -5,8 +5,8 @@ import 'package:jiffy/jiffy.dart';
 
 class UsersChatScreen extends StatelessWidget {
   final List<UserModel> entries = <UserModel>[
-    UserModel(0, 'username0', 'https://www.w3schools.com/howto/img_avatar.png',
-        'online', '2021-10-10T00:00:00Z', 'lastMessage', false),
+    UserModel(0, 'usernameusername0000000000000000000000000000000000', 'https://www.w3schools.com/howto/img_avatar.png',
+        'online', '2021-10-10T00:00:00Z', 'lastMessage lastMessagelastMessage lastMessagelastMessagelastMessagelastMessage', false),
     UserModel(1, 'username1', 'https://www.w3schools.com/howto/img_avatar2.png',
         'offline', '2021-10-10T00:00:00Z', 'Haha ', false),
     UserModel(2, 'username2', 'https://www.w3schools.com/howto/img_avatar.png',
@@ -167,20 +167,20 @@ class UserChart extends StatelessWidget {
       // color: Colors.red,
       height: 80,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
             maxRadius: 24,
             backgroundImage: NetworkImage(this.user.avatar),
           ),
-          Container(
+          Expanded(
               child: Container(
             margin: EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: 220,
+                Expanded(
                   child: Container(
-                    // color: Colors.yellow,
                     child: Text(
                       this.user.username,
                       style: TextStyle(
@@ -191,10 +191,8 @@ class UserChart extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 220,
+                Expanded(
                   child: Container(
-                    // color: Colors.blue,
                     child: Text(
                       this.user.lastMessage,
                       style: TextStyle(
@@ -210,20 +208,16 @@ class UserChart extends StatelessWidget {
             ),
           )),
           Container(
-            child: SizedBox(
-              // width: double.infinity,
-              child: Container(
-                width: 80,
-                child: Text(
-                  Jiffy(this.user.lastSeen).format("MMM do"),
-                  style: TextStyle(
-                      color: Colors.indigoAccent[900],
-                      fontWeight: this.user.isSeen == true
-                          ? FontWeight.bold
-                          : FontWeight.normal),
-                  textAlign: TextAlign.right,
-                ),
-              ),
+            // color: Colors.blue,
+            width: 80,
+            child: Text(
+              Jiffy(this.user.lastSeen).format("MMM do"),
+              style: TextStyle(
+                  color: Colors.indigoAccent[900],
+                  fontWeight: this.user.isSeen == true
+                      ? FontWeight.bold
+                      : FontWeight.normal),
+              textAlign: TextAlign.right,
             ),
           ),
         ],
