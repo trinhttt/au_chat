@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 enum UserType { receiver, sender }
-enum MessageType { text, icon }
+enum MessageType { text, icon, image }
 
 class ChatMessage {
-  dynamic messageContent;
+  dynamic messageContent; //includes: iconCode(int), image path, text
   UserType userType;
   MessageType messageType;
 
@@ -49,6 +51,17 @@ class DetailChatScreenState extends State<DetailChatScreen> {
       textEditingController.clear();
       _hasText = false;
     });
+  }
+
+  Future _getImage() async {
+    ImagePicker imagePicker = ImagePicker();
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        messages.insert(0,
+            ChatMessage(pickedFile.path, UserType.sender, MessageType.image));
+      });
+    }
   }
 
   @override
@@ -147,35 +160,52 @@ class DetailChatScreenState extends State<DetailChatScreen> {
             reverse: true,
             itemCount: messages.length,
             itemBuilder: (context, index) {
-              return messages[index].messageType == MessageType.icon
-                  ? Align(
-                      alignment: messages[index].userType == UserType.receiver
-                          ? Alignment.topLeft
-                          : Alignment.topRight,
+              if (messages[index].messageType == MessageType.icon) {
+                return Align(
+                    alignment: messages[index].userType == UserType.receiver
+                        ? Alignment.topLeft
+                        : Alignment.topRight,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Icon(
                         IconData(messages[index].messageContent as int,
                             fontFamily: 'MaterialIcons'),
                         size: 30,
-                      ))
-                  : Container(
-                      padding: EdgeInsets.only(
-                          left: 15, right: 15, top: 5, bottom: 5),
-                      child: Align(
-                        alignment: messages[index].userType == UserType.receiver
-                            ? Alignment.topLeft
-                            : Alignment.topRight,
-                        child: Container(
-                            padding: EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: messages[index].userType ==
-                                        UserType.receiver
-                                    ? Colors.blueGrey
-                                    : Colors.blue),
-                            child: Text(messages[index].messageContent)),
                       ),
-                      // child:           if (messages[index].messageType == MessageType.receiver)
-                    );
+                    ));
+              } else if (messages[index].messageType == MessageType.text) {
+                return Container(
+                  padding:
+                      EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                  child: Align(
+                    alignment: messages[index].userType == UserType.receiver
+                        ? Alignment.topLeft
+                        : Alignment.topRight,
+                    child: Container(
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: messages[index].userType == UserType.receiver
+                                ? Colors.blueGrey
+                                : Colors.blue),
+                        child: Text(messages[index].messageContent)),
+                  ),
+                );
+              } else {
+                return Align(
+                    alignment: messages[index].userType == UserType.receiver
+                        ? Alignment.topLeft
+                        : Alignment.topRight,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      child: Image.file(
+                        File(messages[index].messageContent),
+                        width: 120.0,
+                        height: 120.0,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ));
+              }
             }),
       ),
     );
@@ -194,8 +224,9 @@ class DetailChatScreenState extends State<DetailChatScreen> {
             SizedBox(
               width: 40.0,
               child: IconButton(
-                // padding: EdgeInsets.all(3.0),
-                onPressed: () {},
+                onPressed: () {
+                  _getImage();
+                },
                 icon: Icon(
                   Icons.add_photo_alternate,
                   color: Colors.blue,
