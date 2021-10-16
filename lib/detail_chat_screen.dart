@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'common/colors.dart';
 
 enum UserType { receiver, sender }
 enum MessageType { text, icon, image }
@@ -69,7 +70,8 @@ class DetailChatScreenState extends State<DetailChatScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: _buildCustomAppBar(context),
-        body: _buildBodyView());
+        body: _buildBodyView(),
+    );
   }
 
   AppBar _buildCustomAppBar(BuildContext context) {
@@ -80,7 +82,6 @@ class DetailChatScreenState extends State<DetailChatScreen> {
         // or using PreferredSize
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 5),
-          color: Colors.black,
           child: Row(
             children: [
               IconButton(
@@ -135,15 +136,12 @@ class DetailChatScreenState extends State<DetailChatScreen> {
 
   Widget _buildBodyView() {
     return Container(
-      color: Colors.black,
+      color: AUColors.themeColor,
       child: SafeArea(
-        child: Container(
-          color: Colors.black,
-          child: Stack(
-            children: [_buildChatContentView(), _buildChatBoxView()],
-          ),
+            child: Stack(
+              children: [_buildChatContentView(), _buildChatBoxView()],
+            ),
         ),
-      ),
     );
   }
 
@@ -151,10 +149,10 @@ class DetailChatScreenState extends State<DetailChatScreen> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
+        color: AUColors.bgColor,
         padding: EdgeInsets.only(
             left: 10, right: 10, top: 10, bottom: _chatBoxHeight + 10),
         width: double.infinity,
-        color: Colors.black,
         child: ListView.builder(
             // padding: EdgeInsets.symmetric(vertical: 10),
             reverse: true,
@@ -215,10 +213,10 @@ class DetailChatScreenState extends State<DetailChatScreen> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
+        color: AUColors.themeColor,
         padding: EdgeInsets.all(10),
         height: _chatBoxHeight,
         width: double.infinity,
-        color: Colors.black,
         child: Row(
           children: [
             SizedBox(
