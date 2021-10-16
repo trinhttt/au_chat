@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 
 import 'detail_chat_screen.dart';
 
-class HomeSreen extends StatefulWidget {
-  const HomeSreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeSreen> createState() => _HomeSreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeSreenState extends State<HomeSreen> {
+class _HomeScreenState extends State<HomeScreen> {
   int _pageIndex = 0;
   late PageController _pageController;
 
