@@ -1,4 +1,5 @@
 import 'package:au_chat/common/colors.dart';
+import 'package:au_chat/screens/auth/login_screen.dart';
 import 'package:au_chat/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
           primaryColor: AUColors.themeColor,
           brightness: Brightness.dark
       ),
-      home: HomeSreen(),
+      home: LoginScreen(),
     );
   }
 }
