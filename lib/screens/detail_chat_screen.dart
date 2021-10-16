@@ -1,24 +1,14 @@
 import 'dart:io';
 
-import 'package:au_chat/screens/users_chat_screen.dart';
+import 'package:au_chat/common/enums/message_type_enum.dart';
+import 'package:au_chat/common/enums/user_type_enum.dart';
+import 'package:au_chat/models/chat_message_model.dart';
+import 'package:au_chat/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../common/colors.dart';
-import 'home_screen.dart';
-
-enum UserType { receiver, sender }
-enum MessageType { text, icon, image }
-
-class ChatMessage {
-  dynamic messageContent; //includes: iconCode(int), image path, text
-  UserType userType;
-  MessageType messageType;
-
-  ChatMessage(this.messageContent,
-      [this.userType = UserType.sender, this.messageType = MessageType.text]);
-}
 
 class DetailChatScreen extends StatefulWidget {
   @override
@@ -92,7 +82,7 @@ class DetailChatScreenState extends State<DetailChatScreen> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => HomeSreen()),
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
                   );
                 },
                 icon: Icon(Icons.arrow_back_ios, color: Colors.blue, size: 25),
