@@ -1,8 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'common/colors.dart';
+
+import 'package:au_chat/screens/users_chat_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../common/colors.dart';
+import 'home_screen.dart';
 
 enum UserType { receiver, sender }
 enum MessageType { text, icon, image }
@@ -68,9 +72,9 @@ class DetailChatScreenState extends State<DetailChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: _buildCustomAppBar(context),
-        body: _buildBodyView(),
+      resizeToAvoidBottomInset: true,
+      appBar: _buildCustomAppBar(context),
+      body: _buildBodyView(),
     );
   }
 
@@ -86,7 +90,10 @@ class DetailChatScreenState extends State<DetailChatScreen> {
             children: [
               IconButton(
                 onPressed: () {
-                  // Navigator.pop(context);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeSreen()),
+                  );
                 },
                 icon: Icon(Icons.arrow_back_ios, color: Colors.blue, size: 25),
               ),
@@ -131,6 +138,7 @@ class DetailChatScreenState extends State<DetailChatScreen> {
           ),
         ),
       ),
+      automaticallyImplyLeading: false,
     );
   }
 
@@ -138,10 +146,10 @@ class DetailChatScreenState extends State<DetailChatScreen> {
     return Container(
       color: AUColors.themeColor,
       child: SafeArea(
-            child: Stack(
-              children: [_buildChatContentView(), _buildChatBoxView()],
-            ),
+        child: Stack(
+          children: [_buildChatContentView(), _buildChatBoxView()],
         ),
+      ),
     );
   }
 
@@ -159,50 +167,11 @@ class DetailChatScreenState extends State<DetailChatScreen> {
             itemCount: messages.length,
             itemBuilder: (context, index) {
               if (messages[index].messageType == MessageType.icon) {
-                return Align(
-                    alignment: messages[index].userType == UserType.receiver
-                        ? Alignment.topLeft
-                        : Alignment.topRight,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Icon(
-                        IconData(messages[index].messageContent as int,
-                            fontFamily: 'MaterialIcons'),
-                        size: 30,
-                      ),
-                    ));
+                return _buildChatBoxIcon(messages[index]);
               } else if (messages[index].messageType == MessageType.text) {
-                return Container(
-                  padding:
-                      EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-                  child: Align(
-                    alignment: messages[index].userType == UserType.receiver
-                        ? Alignment.topLeft
-                        : Alignment.topRight,
-                    child: Container(
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: messages[index].userType == UserType.receiver
-                                ? Colors.blueGrey
-                                : Colors.blue),
-                        child: Text(messages[index].messageContent)),
-                  ),
-                );
+                return _buildChatBoxMessage(messages[index]);
               } else {
-                return Align(
-                    alignment: messages[index].userType == UserType.receiver
-                        ? Alignment.topLeft
-                        : Alignment.topRight,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      child: Image.file(
-                        File(messages[index].messageContent),
-                        width: 120.0,
-                        height: 120.0,
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ));
+                return _buildChatBoxFile(messages[index]);
               }
             }),
       ),
@@ -284,5 +253,55 @@ class DetailChatScreenState extends State<DetailChatScreen> {
         ),
       ),
     );
+  }
+
+  Widget _buildChatBoxMessage(message) {
+    return Container(
+      padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      child: Align(
+        alignment: _setAlignmentUserType(message.userType),
+        child: Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: message.userType == UserType.receiver
+                    ? Colors.blueGrey
+                    : Colors.blue),
+            child: Text(message.messageContent)),
+      ),
+    );
+  }
+
+  Widget _buildChatBoxIcon(message) {
+    return Align(
+        alignment: _setAlignmentUserType(message.userType),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Icon(
+            IconData(message.messageContent as int,
+                fontFamily: 'MaterialIcons'),
+            size: 30,
+          ),
+        ));
+  }
+
+  Widget _buildChatBoxFile(message) {
+    return Align(
+        alignment: _setAlignmentUserType(message.userType),
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 5),
+          child: Image.file(
+            File(message.messageContent),
+            width: 120.0,
+            height: 120.0,
+            fit: BoxFit.fitHeight,
+          ),
+        ));
+  }
+
+  Alignment _setAlignmentUserType(userType) {
+    return userType == UserType.receiver
+        ? Alignment.topLeft
+        : Alignment.topRight;
   }
 }
