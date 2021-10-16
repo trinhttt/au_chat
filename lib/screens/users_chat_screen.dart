@@ -3,7 +3,7 @@ import 'package:au_chat/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
-import '../detail_chat_screen.dart';
+import 'detail_chat_screen.dart';
 
 class UsersChatScreen extends StatelessWidget {
   final List<UserModel> entries = <UserModel>[
@@ -130,6 +130,7 @@ class UsersChatScreen extends StatelessWidget {
               ),
             ),
           ),
+          automaticallyImplyLeading: false,
         ),
         // body: SingleChildScrollView(
         //   child: Column(
