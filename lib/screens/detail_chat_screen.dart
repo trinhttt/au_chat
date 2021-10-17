@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:au_chat/common/enums/message_type_enum.dart';
 import 'package:au_chat/common/enums/user_type_enum.dart';
 import 'package:au_chat/models/chat_message_model.dart';
+import 'package:au_chat/provider/socket.dart';
 import 'package:au_chat/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class DetailChatScreen extends StatefulWidget {
 }
 
 class DetailChatScreenState extends State<DetailChatScreen> {
+  SocketProvider _socket = SocketProvider();
   final double _chatBoxHeight = 60;
   var _hasText = false;
   final TextEditingController textEditingController = TextEditingController();
@@ -35,12 +37,23 @@ class DetailChatScreenState extends State<DetailChatScreen> {
     ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
   ];
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('connect');
+    _socket.establishConnection();
+  }
+
   void _sendMessage() {
     setState(() {
       if (textEditingController.text.isEmpty) {
         messages.insert(
             0, ChatMessage(57947, UserType.sender, MessageType.icon));
       } else {
+        print(textEditingController.text);
+        _socket.addMessage(textEditingController.text, '1', '1');
+        _socket.getChatMessage();
         messages.insert(0, ChatMessage(textEditingController.text));
       }
       textEditingController.clear();
