@@ -44,7 +44,7 @@ class UsersChatScreen extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          toolbarHeight: 120,
+          toolbarHeight: 114,
           flexibleSpace: SafeArea(
             child: Container(
               child: Column(
@@ -102,28 +102,29 @@ class UsersChatScreen extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 10, right: 10),
-                    // alignment: Alignment.center,
-                    height: 50,
-                    width: width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                      color: Colors.grey[700],
-                    ),
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.search,
-                        size: 28,
-                      ),
-                      title: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search ...',
-                          hintStyle: TextStyle(
-                            fontSize: 18,
-                            fontStyle: FontStyle.italic,
+                    height: 46,
+                    // color: Colors.yellow,
+                    margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: TextField(
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        isCollapsed: true,
+                        filled: true,
+                        // border: InputBorder.none,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(23),
+                          borderSide: BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
                           ),
-                          border: InputBorder.none,
                         ),
+                        prefixIcon: Icon(Icons.search, color: Colors.white),
+                        hintText: 'Search ...',
+                        hintStyle: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.white
+                        ),
+                        // disabledBorder: UnderlineInputBorder(),
                       ),
                     ),
                   ),
@@ -133,19 +134,6 @@ class UsersChatScreen extends StatelessWidget {
           ),
           automaticallyImplyLeading: false,
         ),
-        // body: SingleChildScrollView(
-        //   child: Column(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: <Widget>[
-        //       Container(
-        //         padding: EdgeInsets.only(bottom: kBottomNavigationBarHeight),
-        //         height: height - 120,
-        //         color: Colors.grey[200],
-        //         child: ListUserChat(entries),
-        //       ),
-        //     ],
-        //   ),
-        // ),
         body: Container(
           color: AUColors.bgColor,
           width: double.infinity,

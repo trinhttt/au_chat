@@ -83,8 +83,8 @@ class RegisterScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(bottom: 30.0, top: 30.0),
-                height: 100,
+                margin: EdgeInsets.only(bottom: 10.0, top: 60.0),
+                height: 130,
                 width: double.infinity,
                 // child: Image(image: AssetImage('assets/images/logo.png'), fit: BoxFit.cover,),
                 decoration: BoxDecoration(
@@ -96,12 +96,10 @@ class RegisterScreen extends StatelessWidget {
               ),
               Container(
                   margin: EdgeInsets.only(left: 5.0, right: 5.0),
-                  height: 340,
+                  height: 290,
                   width: width,
-                  // color: Colors.red,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    // color: Colors.white,
                     // boxShadow: [
                     //   BoxShadow(
                     //     color: Colors.grey,
@@ -118,16 +116,18 @@ class RegisterScreen extends StatelessWidget {
                       children: [
                         Container(
                           margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                          height: 60,
+                          height: 50,
                           // color: Colors.red,
                           // margin: ,
-                          child: TextField(
+                          child: TextFormField(
                             controller: name,
+                            textAlignVertical: TextAlignVertical.center,
                             decoration: InputDecoration(
+                              isCollapsed: true,
                               filled: true,
                               // border: InputBorder.none,
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(25),
                                 borderSide: BorderSide(
                                   width: 0,
                                   style: BorderStyle.none,
@@ -146,18 +146,20 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         Spacer(),
                         Container(
-                          height: 60,
+                          height: 50,
                           // color: Colors.yellow,
                           margin: EdgeInsets.only(left: 20.0, right: 20.0),
                           child: TextField(
                             controller: email,
                             // Set up keyboard email
                             keyboardType: TextInputType.emailAddress,
+                            textAlignVertical: TextAlignVertical.center,
                             decoration: InputDecoration(
+                              isCollapsed: true,
                               filled: true,
                               // border: InputBorder.none,
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(25),
                                 borderSide: BorderSide(
                                   width: 0,
                                   style: BorderStyle.none,
@@ -176,10 +178,11 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         Spacer(),
                         Container(
-                          height: 60,
+                          height: 50,
                           // color: Colors.yellow,
                           margin: EdgeInsets.only(left: 20.0, right: 20.0),
                           child: TextField(
+                            textAlignVertical: TextAlignVertical.center,
                             controller: password,
                             // Set input type password
                             obscureText: true,
@@ -187,10 +190,11 @@ class RegisterScreen extends StatelessWidget {
                             autocorrect: false,
                             // End Set input type password
                             decoration: InputDecoration(
+                              isCollapsed: true,
                               filled: true,
                               // border: InputBorder.none,
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(25),
                                 borderSide: BorderSide(
                                   width: 0,
                                   style: BorderStyle.none,
@@ -210,7 +214,7 @@ class RegisterScreen extends StatelessWidget {
                         Spacer(),
                         Container(
                             margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                            height: 60,
+                            height: 50,
                             width: double.infinity,
                             // color: Colors.red,
                             // margin: ,
@@ -219,10 +223,10 @@ class RegisterScreen extends StatelessWidget {
                                 shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30.0),
-                                        side: BorderSide(color: Colors.black))),
+                                        borderRadius: BorderRadius.circular(25.0),
+                                        side: BorderSide(color: Colors.blue))),
                                 backgroundColor: MaterialStateProperty.all<Color>(
-                                    Colors.black),
+                                    Colors.blue),
                               ),
                               onPressed: () async {
                                 if (name.text.length > 0 &&
@@ -238,7 +242,7 @@ class RegisterScreen extends StatelessWidget {
                               child: Text(
                                 'Register',
                                 style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 20,
                                 ),
                               ),
                             )),

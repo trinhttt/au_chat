@@ -56,8 +56,8 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(bottom: 50.0, top: 50.0),
-                height: 100,
+                margin: EdgeInsets.only(bottom: 30.0, top: 60.0),
+                height: 130,
                 width: double.infinity,
                 // child: Image(image: AssetImage('assets/images/logo.png'), fit: BoxFit.cover,),
                 decoration: BoxDecoration(
@@ -69,31 +69,31 @@ class LoginScreen extends StatelessWidget {
               ),
               Container(
                   margin: EdgeInsets.only(left: 5.0, right: 5.0),
-                  height: 260,
+                  height: 210,
                   width: width,
                   // color: Colors.red,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Container(
-                    margin: EdgeInsets.only(top: 25.0, bottom: 25.0),
+                    margin: EdgeInsets.only(top: 5.0, bottom: 25.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                          height: 60,
-                          // color: Colors.red,
-                          // margin: ,
+                          height: 50,
                           child: TextField(
+                            textAlignVertical: TextAlignVertical.center,
                             controller: email,
                             // Set up keyboard email
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
+                              isCollapsed: true,
                               filled: true,
                               // border: InputBorder.none,
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(25),
                                 borderSide: BorderSide(
                                   width: 0,
                                   style: BorderStyle.none,
@@ -112,10 +112,11 @@ class LoginScreen extends StatelessWidget {
                         ),
                         Spacer(),
                         Container(
-                          height: 60,
+                          height: 50,
                           // color: Colors.yellow,
                           margin: EdgeInsets.only(left: 20.0, right: 20.0),
                           child: TextField(
+                            textAlignVertical: TextAlignVertical.center,
                             controller: password,
                             // Set input type password
                             obscureText: true,
@@ -123,10 +124,11 @@ class LoginScreen extends StatelessWidget {
                             autocorrect: false,
                             // End Set input type password
                             decoration: InputDecoration(
+                              isCollapsed: true,
                               filled: true,
                               // border: InputBorder.none,
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(25),
                                 borderSide: BorderSide(
                                   width: 0,
                                   style: BorderStyle.none,
@@ -146,7 +148,7 @@ class LoginScreen extends StatelessWidget {
                         Spacer(),
                         Container(
                             margin: EdgeInsets.only(left: 20.0, right: 20.0),
-                            height: 60,
+                            height: 50,
                             width: double.infinity,
                             // color: Colors.red,
                             // margin: ,
@@ -155,10 +157,10 @@ class LoginScreen extends StatelessWidget {
                                 shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30.0),
-                                        side: BorderSide(color: Colors.black))),
+                                        borderRadius: BorderRadius.circular(25.0),
+                                        side: BorderSide(color: Colors.blue))),
                                 backgroundColor: MaterialStateProperty.all<Color>(
-                                    Colors.black),
+                                    Colors.blue),
                               ),
                               onPressed: () async {
                                 // var contents = await local.readLocal();
@@ -186,7 +188,7 @@ class LoginScreen extends StatelessWidget {
                               child: Text(
                                 'Login',
                                 style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 20,
                                 ),
                               ),
                             )),
