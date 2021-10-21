@@ -33,6 +33,7 @@ dependencies:
   path_provider:
   crypto:
   socket_io_client:
+  http:
 
 dev_dependencies:
   flutter_test:

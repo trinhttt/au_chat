@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:au_chat/common/colors.dart';
+import 'package:au_chat/provider/api_service.dart';
 import 'package:au_chat/screens/auth/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:au_chat/screens/home_screen.dart';
@@ -163,6 +164,7 @@ class LoginScreen extends StatelessWidget {
                                     Colors.blue),
                               ),
                               onPressed: () async {
+                                await APIService.login(email.text, password.text);
                                 // var contents = await local.readLocal();
                                 // // decode string to object
                                 // var data = json.decode(contents!);
@@ -177,12 +179,11 @@ class LoginScreen extends StatelessWidget {
                                 // } else {
                                 //   showAlertDialog(context);
                                 // }
-                                Navigator.pushAndRemoveUntil(
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          HomeScreen()),
-                                  (Route<dynamic> route) => false,
+                                          HomeScreen())
                                 );
                               },
                               child: Text(

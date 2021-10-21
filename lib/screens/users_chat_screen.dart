@@ -1,40 +1,43 @@
 import 'package:au_chat/common/colors.dart';
 import 'package:au_chat/models/user_model.dart';
+import 'package:au_chat/provider/api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
 import 'detail_chat_screen.dart';
 
-class UsersChatScreen extends StatelessWidget {
-  final List<UserModel> entries = <UserModel>[
-    UserModel(
-        0,
-        'usernameusername0000000000000000000000000000000000',
-        'https://www.w3schools.com/howto/img_avatar.png',
-        'online',
-        '2021-10-10T00:00:00Z',
-        'lastMessage lastMessagelastMessage lastMessagelastMessagelastMessagelastMessage',
-        false),
-    UserModel(1, 'username1', 'https://www.w3schools.com/howto/img_avatar2.png',
-        'offline', '2021-10-10T00:00:00Z', 'Haha ', false),
-    UserModel(2, 'username2', 'https://www.w3schools.com/howto/img_avatar.png',
-        'away', '2021-10-10T00:00:00Z', 'Hello', true),
-    UserModel(3, 'username3', 'https://www.w3schools.com/howto/img_avatar2.png',
-        'away', '2021-10-10T00:00:00Z', 'See you later', true),
-    UserModel(4, 'username4', 'https://www.w3schools.com/howto/img_avatar2.png',
-        'online', '2021-10-10T00:00:00Z', 'Yes, i do.', true),
-    UserModel(5, 'username5', 'https://www.w3schools.com/howto/img_avatar.png',
-        'online', '2021-10-10T00:00:00Z', 'Can you help me?', true),
-    UserModel(6, 'username6', 'https://www.w3schools.com/howto/img_avatar2.png',
-        'away', '2021-10-10T00:00:00Z', '20 years old', true),
-    UserModel(7, 'username7', 'https://www.w3schools.com/howto/img_avatar2.png',
-        'online', '2021-10-10T00:00:00Z', 'So cute!', true),
-    UserModel(8, 'username8', 'https://www.w3schools.com/howto/img_avatar2.png',
-        'away', '2021-10-09T00:00:00Z', 'Happy', true),
-    UserModel(9, 'username9', 'https://www.w3schools.com/howto/img_avatar.png',
-        'offline', '2021-10-10T00:00:00Z', 'Happy new year!', true),
-  ];
+class UsersChatScreen extends StatefulWidget {
+  @override
+  UsersChatScreenState createState() => UsersChatScreenState();
+}
+
+class UsersChatScreenState extends State<UsersChatScreen> {
+   List<dynamic> entries = [];
+
+  @override
+  void initState() {
+    super.initState();
+    print('UsersChatScreenState');
+    APIService.getUsers().then((data) {
+      print('data $data');
+      setState(() {
+        entries = [
+        UserModel(
+              data[0]['_id'],
+              data[0]['name'],
+              'https://www.w3schools.com/howto/img_avatar.png',
+              'online',
+              '2021-10-10T00:00:00Z',
+              data[0]['email'],
+              false,
+              data[0]['socketId']
+        ),
+        ];
+      });
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +97,7 @@ class UsersChatScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             shape: const RoundedRectangleBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
+                              BorderRadius.all(Radius.circular(30)),
                             ),
                           ),
                         ),
@@ -143,8 +146,10 @@ class UsersChatScreen extends StatelessWidget {
   }
 }
 
+
+
 class ListUserChat extends StatelessWidget {
-  final List<UserModel> users;
+  final List<dynamic> users;
 
   const ListUserChat(this.users, {Key? key}) : super(key: key);
 
@@ -160,7 +165,7 @@ class ListUserChat extends StatelessWidget {
 }
 
 class UserChart extends StatelessWidget {
-  final UserModel user;
+  final dynamic user;
 
   const UserChart(this.user, {Key? key}) : super(key: key);
 
@@ -170,7 +175,7 @@ class UserChart extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DetailChatScreen()),
+          MaterialPageRoute(builder: (context) => DetailChatScreen(), settings: RouteSettings(arguments: user)),
         );
       },
       child: Row(

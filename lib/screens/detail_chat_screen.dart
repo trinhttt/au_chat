@@ -17,6 +17,8 @@ class DetailChatScreen extends StatefulWidget {
 }
 
 class DetailChatScreenState extends State<DetailChatScreen> {
+  dynamic dataUserChat;
+
   SocketProvider _socket = SocketProvider();
   final double _chatBoxHeight = 60;
   var _hasText = false;
@@ -43,6 +45,12 @@ class DetailChatScreenState extends State<DetailChatScreen> {
     super.initState();
     print('connect');
     _socket.establishConnection();
+
+    Future.delayed(Duration.zero, () {
+      dataUserChat = ModalRoute.of(context)?.settings.arguments;
+      print('DetailChatScreenState');
+      print('DetailChatScreenState ${dataUserChat.socketId}');
+    });
   }
 
   void _sendMessage() {
