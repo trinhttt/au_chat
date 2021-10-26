@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:au_chat/common/enums/message_type_enum.dart';
 import 'package:au_chat/common/enums/user_type_enum.dart';
 import 'package:au_chat/models/chat_message_model.dart';
+import 'package:au_chat/models/user_model.dart';
 import 'package:au_chat/provider/socket.dart';
 import 'package:au_chat/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,7 +61,8 @@ class DetailChatScreenState extends State<DetailChatScreen> {
             0, ChatMessage(57947, UserType.sender, MessageType.icon));
       } else {
         print(textEditingController.text);
-        _socket.addMessage(textEditingController.text, '1', '1');
+        print(dataUserChat.id);
+        _socket.addMessage(textEditingController.text, dataUserChat.id);
         _socket.getChatMessage();
         messages.insert(0, ChatMessage(textEditingController.text));
       }

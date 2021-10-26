@@ -1,17 +1,21 @@
 import 'package:au_chat/common/api_config.dart';
+import 'package:au_chat/provider/api_service.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
 class SocketProvider {
   late IO.Socket _socket;
+  String curentUserId = APIService.userIdCurrent;
 
   establishConnection() {
     _socket = IO.io(
-      APIConfig.baseURL,
-      <String, dynamic>{
-        'transports': ['websocket'],
-        'autoConnect': false,
-      },
-    );
+        APIConfig.baseURL,
+        OptionBuilder()
+            .setTransports(['websocket']) // for Flutter or Dart VM
+            .disableAutoConnect() // disable auto-connection
+            .setQuery({'userId': curentUserId})
+            .build());
+
     _socket.connect();
     _socket.on('connect', (_) => print('Connected'));
     _socket.on('disconnect', (_) => print('Disconnected'));
@@ -25,9 +29,9 @@ class SocketProvider {
     _socket.disconnect();
   }
 
-  addMessage(String messBody, String userId, String channelId) {
-    print('messBody $messBody');
-    _socket.emit("newMessage", {messBody, userId, channelId});
+  addMessage(String messBody, String toUserId) {
+    print('messBody $messBody $toUserId');
+    _socket.emit("sendMessage", {'message' : messBody, 'toUserId': toUserId});
   }
 
   getChatMessage() {
