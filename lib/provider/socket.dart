@@ -4,11 +4,11 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
 class SocketProvider {
-  late IO.Socket _socket;
+  late IO.Socket socket;
   String curentUserId = APIService.userIdCurrent;
 
   establishConnection() {
-    _socket = IO.io(
+    socket = IO.io(
         APIConfig.baseURL,
         OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
@@ -16,9 +16,9 @@ class SocketProvider {
             .setQuery({'userId': curentUserId})
             .build());
 
-    _socket.connect();
-    _socket.on('connect', (_) => print('Connected'));
-    _socket.on('disconnect', (_) => print('Disconnected'));
+    socket.connect();
+    socket.on('connect', (_) => print('Connected'));
+    socket.on('disconnect', (_) => print('Disconnected'));
     // _socket.emit("newMessage", {"t1", "t2", "t3"});
     // _socket.on("messageCreated", (data) {
     //   print('${data}');
@@ -26,20 +26,19 @@ class SocketProvider {
   }
 
   closeConnection() {
-    _socket.disconnect();
+    socket.disconnect();
   }
 
   addMessage(String messBody, String toUserId) {
     print('messBody $messBody $toUserId');
-    _socket.emit("sendMessage", {'message' : messBody, 'toUserId': toUserId});
+    socket.emit("sendMessage", {'message' : messBody, 'toUserId': toUserId});
   }
 
   getChatMessage() {
-    _socket.on("messageCreated", (data) {
-      // print('data[0]data[0] data[0]');
-      String messBody = data[0];
-      String userId = data[1];
-      String channelId = data[2];
+    socket.on("addMessageResponse", (data) {
+      print('$data');
+
+      return data['message'];
     });
   }
 }

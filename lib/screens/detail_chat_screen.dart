@@ -39,6 +39,7 @@ class DetailChatScreenState extends State<DetailChatScreen> {
     ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
     ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
   ];
+  String message = '';
 
   @override
   void initState() {
@@ -46,6 +47,13 @@ class DetailChatScreenState extends State<DetailChatScreen> {
     super.initState();
     print('connect');
     _socket.establishConnection();
+    _socket.socket.on("addMessageResponse", (data) {
+      print('$data');
+      setState(() {
+        messages.insert(
+            0, ChatMessage(data['message'], UserType.receiver, MessageType.text));
+      });
+    });
 
     Future.delayed(Duration.zero, () {
       dataUserChat = ModalRoute.of(context)?.settings.arguments;
@@ -63,8 +71,8 @@ class DetailChatScreenState extends State<DetailChatScreen> {
         print(textEditingController.text);
         print(dataUserChat.id);
         _socket.addMessage(textEditingController.text, dataUserChat.id);
-        _socket.getChatMessage();
-        messages.insert(0, ChatMessage(textEditingController.text));
+        messages.insert(
+            0, ChatMessage(textEditingController.text, UserType.sender, MessageType.text));
       }
       textEditingController.clear();
       _hasText = false;
