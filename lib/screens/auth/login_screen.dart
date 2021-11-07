@@ -12,8 +12,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    final email = TextEditingController();
-    final password = TextEditingController();
+    TextEditingController email = TextEditingController();
+    TextEditingController password = TextEditingController();
     LocalStorage local = LocalStorage();
 
     // Show alert
@@ -165,6 +165,8 @@ class LoginScreen extends StatelessWidget {
                               ),
                               onPressed: () async {
                                 await APIService.login(email.text, password.text);
+                                // await APIService.login("trinh@gmail.com", "password");
+
                                 // var contents = await local.readLocal();
                                 // // decode string to object
                                 // var data = json.decode(contents!);

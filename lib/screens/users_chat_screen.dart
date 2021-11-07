@@ -19,21 +19,11 @@ class UsersChatScreenState extends State<UsersChatScreen> {
   void initState() {
     super.initState();
     print('UsersChatScreenState');
-    APIService.getUsers().then((data) {
-      print('data $data');
+    APIService.getUsers().then((users) {
+      print('data $users');
       setState(() {
-        entries = [
-        UserModel(
-              data[0]['_id'],
-              data[0]['name'],
-              'https://www.w3schools.com/howto/img_avatar.png',
-              'online',
-              '2021-10-10T00:00:00Z',
-              data[0]['email'],
-              false,
-              data[0]['socketId']
-        ),
-        ];
+        entries = users;
+        print("entries ${entries}");
       });
     });
 
@@ -183,7 +173,7 @@ class UserChart extends StatelessWidget {
         children: [
           CircleAvatar(
             maxRadius: 24,
-            backgroundImage: NetworkImage(this.user.avatar),
+            backgroundImage: NetworkImage(this.user.avatar ?? "https://www.w3schools.com/howto/img_avatar.png"),
           ),
           Expanded(
               child: Container(
@@ -193,7 +183,7 @@ class UserChart extends StatelessWidget {
               children: [
                 Container(
                   child: Text(
-                    this.user.username,
+                    this.user.name,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: TextStyle(
@@ -205,7 +195,7 @@ class UserChart extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    this.user.lastMessage,
+                    this.user.lastMessage ?? "",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: TextStyle(

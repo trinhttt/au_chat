@@ -5,7 +5,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 
 class SocketProvider {
   late IO.Socket socket;
-  String curentUserId = APIService.userIdCurrent;
+  String curentUserId = APIService.user.id;
 
   establishConnection() {
     socket = IO.io(
@@ -19,10 +19,6 @@ class SocketProvider {
     socket.connect();
     socket.on('connect', (_) => print('Connected'));
     socket.on('disconnect', (_) => print('Disconnected'));
-    // _socket.emit("newMessage", {"t1", "t2", "t3"});
-    // _socket.on("messageCreated", (data) {
-    //   print('${data}');
-    // });
   }
 
   closeConnection() {
