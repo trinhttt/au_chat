@@ -49,10 +49,13 @@ class DetailChatScreenState extends State<DetailChatScreen> {
     _socket.establishConnection();
     _socket.socket.on("addMessageResponse", (data) {
       print('$data');
-      setState(() {
-        messages.insert(0,
-            ChatMessage(data['message'], UserType.receiver, MessageType.text));
-      });
+      if (mounted) {
+        setState(() {
+          messages.insert(0,
+              ChatMessage(
+                  data['message'], UserType.receiver, MessageType.text));
+        });
+      }
     });
 
     Future.delayed(Duration.zero, () {
