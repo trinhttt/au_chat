@@ -27,7 +27,8 @@ class SocketProvider {
 
   addMessage(String messBody, String toUserId) {
     print('messBody $messBody $toUserId');
-    socket.emit("sendMessage", {'message' : messBody, 'toUserId': toUserId});
+    print('messBody $messBody $curentUserId');
+    socket.emit("sendMessage", {'message' : messBody, 'userId': curentUserId, 'toUserId': toUserId});
   }
 
   getChatMessage() {

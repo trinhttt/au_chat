@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:au_chat/common/enums/message_type_enum.dart';
 import 'package:au_chat/common/enums/user_type_enum.dart';
 import 'package:au_chat/models/chat_message_model.dart';
-import 'package:au_chat/models/user_model.dart';
+import 'package:au_chat/provider/api_service.dart';
 import 'package:au_chat/provider/socket.dart';
 import 'package:au_chat/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,19 +25,19 @@ class DetailChatScreenState extends State<DetailChatScreen> {
   var _hasText = false;
   final TextEditingController textEditingController = TextEditingController();
   List<ChatMessage> messages = [
-    ChatMessage(57947, UserType.sender, MessageType.icon),
-    ChatMessage("aaaaaaaaaaaaaaaaaaaaaaaaa", UserType.receiver),
-    ChatMessage("aaaaaaaaaaaaaaaaaaaaaaaaa", UserType.receiver),
-    ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
-    ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
-    ChatMessage("aaaaaaaaaaaaaaaaaaaaaaaaa", UserType.receiver),
-    ChatMessage("aaaaaaaaaaaaaaaaaaaaaaaaa", UserType.receiver),
-    ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
-    ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
-    ChatMessage("aaaaaaaaaaaaaaaaaaaaaaaaa", UserType.receiver),
-    ChatMessage("aaaaaaaaaaaaaaaaaaaaaaaaa", UserType.receiver),
-    ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
-    ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
+    // ChatMessage(57947, UserType.sender, MessageType.icon),
+    // ChatMessage("aaaaaaaaaaaaaaaaaaaaaaaaa", UserType.receiver),
+    // ChatMessage("aaaaaaaaaaaaaaaaaaaaaaaaa", UserType.receiver),
+    // ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
+    // ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
+    // ChatMessage("aaaaaaaaaaaaaaaaaaaaaaaaa", UserType.receiver),
+    // ChatMessage("aaaaaaaaaaaaaaaaaaaaaaaaa", UserType.receiver),
+    // ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
+    // ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
+    // ChatMessage("aaaaaaaaaaaaaaaaaaaaaaaaa", UserType.receiver),
+    // ChatMessage("aaaaaaaaaaaaaaaaaaaaaaaaa", UserType.receiver),
+    // ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
+    // ChatMessage("bbbbbbbbbbbbbbbbbbbbbbbbb", UserType.sender),
   ];
   String message = '';
 
@@ -50,8 +50,8 @@ class DetailChatScreenState extends State<DetailChatScreen> {
     _socket.socket.on("addMessageResponse", (data) {
       print('$data');
       setState(() {
-        messages.insert(
-            0, ChatMessage(data['message'], UserType.receiver, MessageType.text));
+        messages.insert(0,
+            ChatMessage(data['message'], UserType.receiver, MessageType.text));
       });
     });
 
@@ -59,6 +59,14 @@ class DetailChatScreenState extends State<DetailChatScreen> {
       dataUserChat = ModalRoute.of(context)?.settings.arguments;
       print('DetailChatScreenState');
       print('DetailChatScreenState ${dataUserChat.socketId}');
+
+      // setState(() {
+      APIService.getMessages(dataUserChat.id).then((data) {
+        print('messagesmessages ${data[0]}');
+        setState(() {
+          messages = data;
+        });
+      });
     });
   }
 
@@ -72,7 +80,9 @@ class DetailChatScreenState extends State<DetailChatScreen> {
         print(dataUserChat.id);
         _socket.addMessage(textEditingController.text, dataUserChat.id);
         messages.insert(
-            0, ChatMessage(textEditingController.text, UserType.sender, MessageType.text));
+            0,
+            ChatMessage(
+                textEditingController.text, UserType.sender, MessageType.text));
       }
       textEditingController.clear();
       _hasText = false;
