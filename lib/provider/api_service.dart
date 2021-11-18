@@ -19,8 +19,9 @@ class APIService {
     print(user.token);
   }
 
-  static Future<List<UserModel>> getUsers() async {
-    var uri = Uri.https('au-chat-server.herokuapp.com', '/user/list');
+  static Future<List<UserModel>> getUsers({String? key}) async {
+    var uri = Uri.https('au-chat-server.herokuapp.com', '/user/list',
+        key != null ? {'key': key} : null);
     final response = await http
         .get(uri, headers: {'authorization': 'Bearer ' + (user.token ?? "")});
 

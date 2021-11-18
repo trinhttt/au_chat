@@ -1,32 +1,18 @@
 import 'package:au_chat/common/colors.dart';
 import 'package:au_chat/provider/api_service.dart';
-import 'package:au_chat/screens/search_user_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
 import 'detail_chat_screen.dart';
 
-class UsersChatScreen extends StatefulWidget {
+class SearchUsersScreen extends StatefulWidget {
   @override
-  UsersChatScreenState createState() => UsersChatScreenState();
+  SearchUsersScreenState createState() => SearchUsersScreenState();
 }
 
-class UsersChatScreenState extends State<UsersChatScreen> {
+class SearchUsersScreenState extends State<SearchUsersScreen> {
   List<dynamic> entries = [];
-
-  @override
-  void initState() {
-    super.initState();
-    print('UsersChatScreenState');
-    APIService.getUsers().then((users) {
-      print('data $users');
-      setState(() {
-        entries = users;
-        print("entries ${entries}");
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,85 +22,46 @@ class UsersChatScreenState extends State<UsersChatScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          toolbarHeight: 114,
+          // toolbarHeight: 114,
           flexibleSpace: SafeArea(
             child: Container(
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        // padding: EdgeInsets.only(top: 10),
-                        margin: EdgeInsets.only(left: 10),
-                        alignment: Alignment.centerLeft,
-                        height: 60,
-                        width: width - 140,
-                        // color: Colors.blue,
-                        child: Text(
-                          'Conversations',
-                          style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                      ),
-                      Container(
-                        // alignment: Alignment.centerRight,
-                        padding: EdgeInsets.only(top: 10, right: 10),
-                        height: 40,
-                        width: 130,
-                        // color: Colors.orange,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Container(
-                              height: 40,
-                              // width: 60,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.add,
-                                  ),
-                                  Text(
-                                    'Add New',
-                                  ),
-                                ],
-                              )),
-                          style: ElevatedButton.styleFrom(
-                            onPrimary: Colors.white,
-                            primary: Colors.blue,
-                            minimumSize: Size(88, 36),
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print('InkWell InkWellInkWellInkWellInkWell');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SearchUsersScreen()),
-                      );
-                    },
-                    child: Container(
-                        height: 46,
-                        // color: Colors.yellow,
-                        margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                        width: width,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white,
-                          ),
+                  Container(
+                    height: 46,
+                    // color: Colors.yellow,
+                    margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: TextField(
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        isCollapsed: true,
+                        filled: true,
+                        // border: InputBorder.none,
+                        border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(23),
-                          color: Colors.grey[500],
+                          borderSide: BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
                         ),
-                        child: ListTile(title: Text('Search ...'))),
+                        prefixIcon: Icon(Icons.search, color: Colors.white),
+                        hintText: 'Search ...',
+                        hintStyle: TextStyle(
+                            fontStyle: FontStyle.italic, color: Colors.white),
+                      ),
+                      onChanged: (value) {
+                        print('onChanged $value');
+                      },
+                      onSubmitted: (value) {
+                        APIService.getUsers(key: value).then((users) {
+                          print('onSubmitted data $users');
+                          setState(() {
+                            entries = users;
+                            print("onSubmitted entries ${entries}");
+                          });
+                        });
+                      },
+                    ),
                   ),
                 ],
               ),
