@@ -19,7 +19,7 @@ class UsersChatScreenState extends State<UsersChatScreen> {
   void initState() {
     super.initState();
     print('UsersChatScreenState');
-    APIService.getUsers().then((users) {
+    APIService.getFriends().then((users) {
       print('data $users');
       setState(() {
         entries = users;

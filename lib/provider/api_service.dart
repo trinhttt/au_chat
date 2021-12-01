@@ -19,6 +19,25 @@ class APIService {
     print(user.token);
   }
 
+  static Future<List<UserModel>> getFriends() async {
+    var uri = Uri.https('au-chat-server.herokuapp.com', '/user/friends');
+    final response = await http
+        .get(uri, headers: {'authorization': 'Bearer ' + (user.token ?? "")});
+
+    print('/user/friends${response.body}');
+    final data = jsonDecode(response.body);
+    final list = data['data'] as List;
+
+    final users = list.map((user) {
+      return UserModel.fromJson(user);
+    }).toList();
+
+    final userChat =
+    users.where((element) => element.email != user.email).toList();
+    print('userChat $userChat');
+    return userChat;
+  }
+
   static Future<List<UserModel>> getUsers({String? key}) async {
     var uri = Uri.https('au-chat-server.herokuapp.com', '/user/list',
         key != null ? {'key': key} : null);
